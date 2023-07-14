@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="flex h-screen bg-[#00FFFF] justify-center items-center">
+        <div class=""><h1>Rock | Paper | Scissors</h1></div>
+        <div class="headtext">
+            <h1 id="text"></h1>
+        </div>
+        <div class="answertext"></div>
+        <div class="addtext"></div>
+        <div class="h-100">
+            <button class="" onclick="choices = 'Rock'
+            pickMove(choices)">Rock</button>
+            <button onclick="choices = 'Paper'
+            pickMove(choices)">Paper</button>
+            <button onclick="choices = 'Scissors'
+            pickMove(choices)">Scissors</button>
+        </div>
+    </div>
+    <script>
+    let choices = '';
+    let computeChoices = Math.random();
+    const pickMove = (choices) => {
+        document.getElementById("text").textContent = choices;
+    }
+
+    const computerMove = (computerChoices) => {
+
+    }
+
+    const playGame = (pickMove, computerMove) => {
+
+    }
+
+    
+    </script>
+</body>
+</html>
