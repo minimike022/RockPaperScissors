@@ -7,28 +7,30 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class = "bg-[#454545]">
-    <div class="flex justify-center items-center">
-        <div class="font-bold text-2xl text-white"><h1>Rock | Paper | Scissors</h1></div>
-        <div class="font-bold text-white text-xl">
-            <h1 id="text"></h1>
+    <div class="flex justify-center items-center flex-col">
+        <div class="font-bold text-2xl text-white "><h1>Rock | Paper | Scissors</h1></div>
+        <div class="font-bold text-white text-4xl m-5">
+            <h1 id="computerMoves"></h1>
         </div>
-        <div class="answertext"></div>
-        <div class="addtext"></div>
+        <div class="answertext">
+            <h1 id="result" class = "text-3xl text white font-bold"></h1></div>
+            <h1 id="player" class = "text-2xl text-white font-semibold m-3"></h1>
+        <div class="addtext"><h1 id="stats"></h1></div>
         <div class="p-3">
 
              <!--Rock Button-->
             <button class="font-bold rounded-md bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28 h-12" onclick="playerMove = 'Rock' 
-            toDocument(playerMove, playGame, scores)
+            toDocument(playerMove,playGame, scores);
             ">Rock</button>
 
              <!--Paper Button-->
             <button class="font-bold rounded-md p-3 bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28" onclick="playerMove = 'Paper'
-            toDocument(playerMove,playGame,scores)
+            toDocument(playerMove,playGame, scores);
             ">Paper</button>
 
             <!--Scissors Button-->
             <button class="font-bold rounded-md p-3 bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28" onclick="playerMove = 'Scissors'
-            toDocument(playerMove,playGame, scores)
+            toDocument(playerMove,playGame, scores);
             ">Scissors</button>
 
             <!--Reset Button-->
@@ -38,13 +40,14 @@
             scores.lose = 0;
             scores.tie = 0;
             localStorage.removeItem('scores');
+            reset()
             "
             >Reset</button>
         </div>
     </div>
     <script>
     let playerMove = '';
-    let scores = JSON.parse(localStorage.getItem("scores")) || {win: 0, lose: 0, tie: 0}
+    let scores = JSON.parse(localStorage.getItem("scored")) || {win: 0, lose: 0, tie: 0}
 
     let computerMove = () => {
         let computerChoices =''
@@ -58,14 +61,11 @@
             else if (number >= 2/3 && number < 1) {
                 computerChoices = "Scissors";
             }
-            return computerChoices
+            return computerChoices;
     }
 
-    let playGame = (playerMove) => {
-        let pickComputerMove = computerMove()
+    let playGame = (playerMove, pickComputerMove) => {
         let result = ''
-        console.log(playerMove)
-        console.log(pickComputerMove)
         if (playerMove === "Rock") {
             if (pickComputerMove === "Rock") {
                 scores.tie += 1
@@ -101,16 +101,25 @@
             }
         }
         return result
-        localStorage.setItem('scores', JSON.stringify(scores));
+        localStorage.setItem('scored', JSON.stringify(scores));
     }
 
-    const toDocument = (playerChoice, playGame, scores) => {
-        console.log(`Win: ${scores.win}. Lose ${scores.lose}. Tie: ${scores.tie}`)
-        document.getElementById("text").textContent = playerChoice;
-        let result = playGame(playerChoice)
-        console.log(result)
+    const toDocument = (playerMove,playGame, scores) => {
+        let scored = `Win: ${scores.win}. Lose: ${scores.lose}. Tie: ${scores.tie}`
+        let computerMoves = computerMove()
+        let results = playGame(playerMove, computerMoves)
+        document.getElementById("stats").textContent = scored
+        document.getElementById("computerMoves").textContent = computerMoves
+        document.getElementById("result").textContent = results 
+        document.getElementById("player").textContent = playerMove
+        
     }
-
+    const reset = () => {
+        document.getElementById("computerMoves").textContent = ''
+        document.getElementById("result").textContent = ''
+        document.getElementById("player").textContent = ''
+    }
+    
     
     </script>
 </body>
