@@ -15,15 +15,36 @@
         <div class="answertext"></div>
         <div class="addtext"></div>
         <div class="p-3">
+
+             <!--Rock Button-->
             <button class="font-bold rounded-md bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28 h-12" onclick="playerMove = 'Rock' 
-            toDocument(playerMove, playGame)
+            toDocument(playerMove, playGame, scores)
             ">Rock</button>
-            <button class="font-bold rounded-md p-3 bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28" onclick="playerMove = 'Paper'">Paper</button>
-            <button class="font-bold rounded-md p-3 bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28" onclick="playerMove = 'Scissors'">Scissors</button>
+
+             <!--Paper Button-->
+            <button class="font-bold rounded-md p-3 bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28" onclick="playerMove = 'Paper'
+            toDocument(playerMove,playGame,scores)
+            ">Paper</button>
+
+            <!--Scissors Button-->
+            <button class="font-bold rounded-md p-3 bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28" onclick="playerMove = 'Scissors'
+            toDocument(playerMove,playGame, scores)
+            ">Scissors</button>
+
+            <!--Reset Button-->
+            <button class="font-bold rounded-md p-3 bg-white hover:bg-black hover:text-white active:bg-[#999999]  w-28"
+            onclick="
+            scores.win = 0;
+            scores.lose = 0;
+            scores.tie = 0;
+            localStorage.removeItem('scores');
+            "
+            >Reset</button>
         </div>
     </div>
     <script>
     let playerMove = '';
+    let scores = JSON.parse(localStorage.getItem("scores")) || {win: 0, lose: 0, tie: 0}
 
     let computerMove = () => {
         let computerChoices =''
@@ -68,10 +89,10 @@
                 result = "Lose"
             }
         }else if (playerMove === "Scissors") {
-            if (pickComputerMove === 'Rock') {
+            if (pickComputerMove === "Rock") {
                 scores.lose += 1
                 result = "Lose"
-            }else if(computerMove === "Paper") {
+            }else if (pickComputerMove === "Paper") {
                 scores.win += 1
                 result = "Win"
             }else if (pickComputerMove === "Scissors") {
@@ -79,22 +100,16 @@
                 result = "Tie"
             }
         }
-        return result;
+        return result
+        localStorage.setItem('scores', JSON.stringify(scores));
     }
 
-    const toDocument = (playerChoice, playGame) => {
-        let pickComputer = computerMove();
+    const toDocument = (playerChoice, playGame, scores) => {
+        console.log(`Win: ${scores.win}. Lose ${scores.lose}. Tie: ${scores.tie}`)
         document.getElementById("text").textContent = playerChoice;
-        document.getElementById()
         let result = playGame(playerChoice)
         console.log(result)
     }
-
-    const scores = {
-        win: 0,
-        lose: 0,
-        tie: 0
-    };
 
     
     </script>
